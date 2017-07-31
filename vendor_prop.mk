@@ -76,7 +76,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
     vendor.gralloc.enable_fb_ubwc=1 \
     dev.pm.dyn_samplingrate=1 \
     ro.opengles.version=196610 \
-    ro.qualcomm.cabl=0
+    ro.qualcomm.cabl=0 \
+    debug.hwui.use_buffer_age=false
 
 # Factory reset partition
 PRODUCT_PROPERTY_OVERRIDES += \
