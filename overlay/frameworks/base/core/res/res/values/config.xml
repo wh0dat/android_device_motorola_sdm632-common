@@ -457,4 +457,7 @@
     <!-- Remote server that can provide NTP responses. -->
     <string translatable="false" name="config_ntpServer">1.android.pool.ntp.org</string>
 
+    <!-- Whether device has turbo power charging support -->
+    <bool name="config_hasTurboPowerCharger">true</bool>
+
 </resources>
