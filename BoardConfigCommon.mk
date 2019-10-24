@@ -181,7 +181,7 @@ BOARD_RAMDISK_OFFSET := 0x01000000
 BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
 BOARD_KERNEL_SEPARATED_DTBO := true
 TARGET_KERNEL_ARCH := arm64
-TARGET_KERNEL_CLANG_COMPILE := true
+TARGET_KERNEL_CLANG_COMPILE := false
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
 TARGET_KERNEL_SOURCE := kernel/motorola/msm8953
 TARGET_KERNEL_VERSION := 4.9
@@ -231,6 +231,15 @@ BOARD_ROOT_EXTRA_FOLDERS := persist
 
 # Vendor Security Patch Level
 VENDOR_SECURITY_PATCH := 2018-11-05
+
+TARGET_USE_SDCLANG := true
+ifneq ($(HOST_OS),darwin)
+SDCLANG := true
+SDCLANG_PATH := ./prebuilts/clang/host/linux-x86/sdclang-6.0.2/bin
+SDCLANG_PATH_2 := ./prebuilts/clang/host/linux-x86/sdclang-6.0.2/bin
+SDCLANG_LTO_DEFS := $(PLATFORM_PATH)/sdllvm-lto-defs.mk
+SDCLANG_COMMON_FLAGS := -O3 -fvectorize -Wno-user-defined-warnings -Wno-vectorizer-no-neon -Wno-unknown-warning-option -Wno-deprecated-register -Wno-tautological-type-limit-compare -Wno-sign-compare -Wno-gnu-folding-constant -mllvm -arm-implicit-it=always -Wno-inline-asm -Wno-unused-command-line-argument -Wno-unused-variable
+endif
 
 # SELinux
 include device/qcom/sepolicy/sepolicy.mk
