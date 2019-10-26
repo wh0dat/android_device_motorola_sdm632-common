@@ -192,6 +192,10 @@ on boot
     chown system system /sys/class/backlight/panel0-backlight/brightness
     chown system system /sys/class/backlight/panel0-backlight/max_brightness
 
+    # Gesture
+    chown system system /proc/tpd_gesture
+    chmod 0644 /proc/tpd_gesture
+
     # Allow access to sensors device attributes
     chown system system /sys/class/sensors/MPU6050-accel/enable
     chown system system /sys/class/sensors/MPU6050-accel/poll_delay
