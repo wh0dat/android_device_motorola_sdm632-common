@@ -2,6 +2,10 @@
 # vendor props for sdm632
 #
 
+# ADB/Boot-time Debug
+PRODUCT_PROPERTY_OVERRIDES += \
+ro.boot.adb_early=1
+
 # Audio
 PRODUCT_PROPERTY_OVERRIDES += \
     af.fast_track_multiplier=1 \
