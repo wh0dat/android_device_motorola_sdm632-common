@@ -171,8 +171,10 @@ PRODUCT_BOOT_JARS += qcom.fmradio
 # GPS
 PRODUCT_PACKAGES += \
     android.hardware.gnss@1.0-impl-qti \
+    gps.msm8953 \
     libgnss \
     libgnsspps \
+    libcurl \
     libvehiclenetwork-native
 
 PRODUCT_PACKAGES += \

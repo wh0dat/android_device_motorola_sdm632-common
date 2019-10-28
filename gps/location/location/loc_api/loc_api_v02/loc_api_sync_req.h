@@ -1,4 +1,4 @@
-/* Copyright (c) 2012-2014, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2011,2013,2016, The Linux Foundation. All rights reserved
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -24,55 +24,46 @@
  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
  * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
  * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
  */
-#ifndef LOC_TARGET_H
-#define LOC_TARGET_H
-#define TARGET_SET(gnss,ssc) ( (gnss<<1)|ssc )
-#define TARGET_DEFAULT       TARGET_SET(GNSS_MSM, HAS_SSC)
-#define TARGET_MDM           TARGET_SET(GNSS_MDM, HAS_SSC)
-#define TARGET_APQ_SA        TARGET_SET(GNSS_GSS, NO_SSC)
-#define TARGET_NO_GNSS       TARGET_SET(GNSS_NONE, NO_SSC)
-#define TARGET_MSM_NO_SSC    TARGET_SET(GNSS_MSM, NO_SSC)
-#define TARGET_AUTO          TARGET_SET(GNSS_AUTO, NO_SSC)
-#define TARGET_UNKNOWN       TARGET_SET(GNSS_UNKNOWN, NO_SSC)
-#define getTargetGnssType(target)  (target>>1)
+
+#ifndef LOC_SYNC_REQ_H
+#define LOC_SYNC_REQ_H
 
 #ifdef __cplusplus
 extern "C"
 {
 #endif
+#include <stdbool.h>
+#include <stdint.h>
+#include "loc_api_v02_client.h"
 
-unsigned int loc_get_target(void);
+#define LOC_ENGINE_SYNC_REQUEST_TIMEOUT  (1000) // 1 second
 
-/*The character array passed to this function should have length
-  of atleast PROPERTY_VALUE_MAX*/
-void loc_get_target_baseband(char *baseband, int array_length);
-/*The character array passed to this function should have length
-  of atleast PROPERTY_VALUE_MAX*/
-void loc_get_platform_name(char *platform_name, int array_length);
-/*The character array passed to this function should have length
-  of atleast PROPERTY_VALUE_MAX*/
-void loc_get_auto_platform_name(char *platform_name, int array_length);
+/* Init function */
+extern void loc_sync_req_init();
 
-/* Please remember to update 'target_name' in loc_log.cpp,
-   if do any changes to this enum. */
-typedef enum {
-    GNSS_NONE = 0,
-    GNSS_MSM,
-    GNSS_GSS,
-    GNSS_MDM,
-    GNSS_AUTO,
-    GNSS_UNKNOWN
-}GNSS_TARGET;
 
-typedef enum {
-    NO_SSC = 0,
-    HAS_SSC
-}SSC_TYPE;
+/* Process Loc API indications to wake up blocked user threads */
+extern void loc_sync_process_ind(
+      locClientHandleType     client_handle,     /* handle of the client */
+      uint32_t                ind_id ,      /* respInd id */
+      void                    *ind_payload_ptr, /* payload              */
+      uint32_t                ind_payload_size  /* payload size */
+);
+
+/* Thread safe synchronous request,  using Loc API status return code */
+extern locClientStatusEnumType loc_sync_send_req
+(
+      locClientHandleType       client_handle,
+      uint32_t                  req_id,        /* req id */
+      locClientReqUnionType     req_payload,
+      uint32_t                  timeout_msec,
+      uint32_t                  ind_id,  //ind ID to block for, usually the same as req_id */
+      void                      *ind_payload_ptr /* can be NULL*/
+);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /*LOC_TARGET_H*/
+#endif /* LOC_SYNC_REQ_H */
