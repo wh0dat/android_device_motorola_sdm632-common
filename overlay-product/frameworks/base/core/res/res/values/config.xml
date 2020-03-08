@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--Copyright (c) 2014, The Linux Foundation. All rights reserved.
+<!--
+
+Copyright (c) 2014, The Linux Foundation. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are
@@ -25,23 +27,36 @@ BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
 WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
 OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
 -->
 
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+<resources>
 
-    <!-- Overlay config file for Verizon operator -->
+   <!-- Enable doze mode
+         ComponentName of a dream to show whenever the system would otherwise have gone to sleep. -->
+    <string name="config_dozeComponent">com.android.systemui/com.android.systemui.doze.DozeService</string>
 
-    <bool name="config_LTE_eri_for_network_name">false</bool>
+    <!-- If true, the doze component is not started until after the screen has been turned off
+         and the screen off animation has been performed. -->
+    <bool name="config_dozeAfterScreenOffByDefault">true</bool>
 
-    <!-- Flag specifying whether VoLTE & VT should be available for carrier: independent of
-         carrier provisioning. If false: hard disabled. If true: then depends on carrier
-         provisioning, availability etc -->
-    <bool name="config_carrier_volte_available">true</bool>
+    <!-- Screen brightness used to dim the screen while dozing in a very low power state.
+         May be less than the minimum allowed brightness setting
+         that can be set by the user. -->
+    <integer name="config_screenBrightnessDoze">17</integer>
 
-<!-- If Voice Radio Technology is RIL_RADIO_TECHNOLOGY_LTE:14 this is the value
-         that should be used instead. A value of RIL_RADIO_TECHNOLOGY_UNKNOWN:0 means
-         there is no replacement value and VoLTE is assumed to be supported -->
-    <integer name="config_volte_replacement_rat">6</integer>
+    <!-- Specifies whether to decouple the interactive state of the device from the display on/off state. -->
+    <bool name="config_powerDecoupleInteractiveModeFromDisplay">false</bool>
 
+    <!-- Boolean indicating whether the HWC setColorTransform function can be performed efficiently
+         in hardware. -->
+    <bool name="config_setColorTransformAccelerated">true</bool>
+
+    <!-- ImsService package name to bind to by default. If none is specified in an overlay, an
+         empty string is passed in -->
+    <string name="config_ims_package">org.codeaurora.ims</string>
+
+    <!-- Flag specifying whether or not IMS will use the dynamic ImsResolver -->
+    <bool name="config_dynamic_bind_ims">true</bool>
 
 </resources>
